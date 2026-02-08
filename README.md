@@ -18,10 +18,6 @@ def main(page: ft.Page):
 ```python
     result = ft.Text(value="0" , color=ft.Colors.WHITE, size=28)
 ```
-## El texto incial es "0"
-```python
-    current = "0"
-```
 ## Variables de estado 
 Guarda el numero que se esta mostrando en la calculdora y se inicilaiza en 0.
 ```python
