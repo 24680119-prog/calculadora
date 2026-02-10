@@ -146,7 +146,7 @@ Convierte el numero que esta en pantalla en el segundo operando.
 ## Realiza la operacion matematica segun el operador seleccionado.
 Se comprueba si la operacion seleccionada fue una suma.
 
-str: funcion de python que sirve para convertir un vlaor en texto.
+str: funcion de python que sirve para convertir un valor en texto.
  ```python
             if operator == "+":
 ```
