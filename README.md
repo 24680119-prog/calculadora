@@ -1,7 +1,7 @@
 ## Apunte: Interfaz de mi calculadora en Flet 
-En este apunte se explica como se desarrrolla la interfaz de una calculadora desarrollada en Pyyhon en la libreria Flet oara crear una interfaz grafica. La aplicacion permite realizar operaciones aritmeticas fundamentales como suma, resta, multiplicacion, y division, ademas de funciones adicionales como limpiar la pnatalla (AC), cambiar el signo del numero (+-), calcular porcentajes(%) y mostrar resultados en tiempo real. La calculadora funciona mediante botones interactivos que usan eventos on_click, los cuales ejecutan una funcion central encargada de manejar la logica de las operaciones y actualizar el valor mostrado en la pantalla.
-## Importancion de librerias
-Permite usar field para configurar atrbibutos dentro de clases que solo guardan datos.
+En este apunte se explica como se desarrrolla la interfaz de una calculadora desarrollada en Python en la libreria Flet para crear una interfaz grafica. La aplicacion permite realizar operaciones aritmeticas fundamentales como suma, resta, multiplicacion, y division, ademas de funciones adicionales como limpiar la pantalla (AC), cambiar el signo del numero (+-), calcular porcentajes(%) y mostrar resultados en tiempo real. La calculadora funciona mediante botones interactivos que usan eventos on_click, los cuales ejecutan una funcion central encargada de manejar la logica de las operaciones y actualizar el valor mostrado en la pantalla.
+## Importacion de librerias
+Permite usar field para configurar atributos dentro de clases que solo guardan datos.
 ```phyton
 from dataclasses import field
 import flet as ft
@@ -42,11 +42,11 @@ Cada vez que que el usuario presiona un boton numerico, un punto decimal o reali
     def button_clicked(e: ft.ControlEvent):
 ```
 ## Permite que la funcion use y modifique las variables que fueron creadas fuera de ellas.
-En esta linea le dice a python que las variables current, operator, operand y reset_next no son locales de la funcion button_clicked si no que pertenecen a la funcion main y que se van a modificar desde dentro de button_clicked. Sin nonlocal , python pensaria que estas varibles dentro de button_clicked, y la calculadora no guardaria el estado correcto entre un clic y otro.
+En esta linea le dice a python que las variables current, operator, operand y reset_next no son locales de la funcion button_clicked si no que pertenecen a la funcion main y que se van a modificar desde dentro de button_clicked. Sin nonlocal , python pensaria que estas varibles estan dentro de button_clicked, y la calculadora no guardaria el estado correcto entre un clic y otro.
  ```python
         nonlocal current, operator, operand, reset_next
  ```
-## Obtiene el contenido del boton presionado 
+## Obtiene el contenido del boton presionado.
 Se guarda si el boton era "1", "+" etc. Se usa luego para saber que accion hacer.
 ```python
         data = e.control.content 
@@ -69,7 +69,7 @@ Revisa si el numero que esta en pantalla ya es negativo, es decir, si comiennza 
                 if current.startswith("-"):
   ```
 Si el numero es negativo, se elimina el signo - para vovlerlo positivo.
-currente [1:] toma la cadena desde la posicion 1 hasta el final, quitadno el primer caracter.
+currente [1:] toma la cadena desde la posicion 1 hasta el final, quitando el primer caracter.
  ```python
                     current = current[1:]
  ```
@@ -80,7 +80,7 @@ Si el numero es positivo se le agrega el signo - al inico para convertirlo en ne
  ```
 ## Botones de numeros
 Verifica si el boton presionado es un numero.
-Si el display tiene 0 o se debe reiniciar, el numero nuevo reemplaza el actual ademas de cuando se deben concatener los digitos.
+Si el display tiene 0 o se debe reiniciar el numero nuevo reemplaza el actual ademas de cuando se deben concatener los digitos.
 ```python
         elif data.isdigit():
             if current == "0" or reset_next:
@@ -90,7 +90,7 @@ Si el display tiene 0 o se debe reiniciar, el numero nuevo reemplaza el actual a
                 current += data
  ```
 ## Boton de punto decimal 
-Permite crear numeros decimales  y solo se agrega el punto si aun ni existe en el numero actual.
+Permite crear numeros decimales y solo se agrega el punto si aun no existe en el numero actual.
 Evita errores como 3.14.5
 ```python
         elif data == ".":
@@ -107,7 +107,7 @@ Si ya habia una operacion pendiente convierte el numero actual en el segundo ope
             if operator and not reset_next:
                 second = float(current)
  ```
-# Realiza la operacion matematica correspondiente 
+# Realiza la operacion matematica correspondiente.
 if operator == "+" verifica si el operador seleccionado es una suma al igual que lo hace con la resta , multiplicacion, y division. Mientras que operand += second suman el segundo numero(second) al valor que ya estaba guardado en operand.
 Es equivalente a : operand = operand + second 
 operand += second resta el segundo numero al valor almacenado en operand lo mismo para multiplicacion y division.
@@ -118,32 +118,32 @@ Por ultimo se evita dividir entre cero.
                 elif operator == "*": operand *= second
                 elif operator == "/": operand = operand / second if second != 0 else 0
  ```
-## Muestra el resultado en pantalla
+## Muestra el resultado en pantalla.
 ```python
                 current = str(operand)
  ```
-## Si no habia operacion previa guarda el numero actual como primer operando.
+## Si no habia una operacion previa guarda el numero actual como primer operando.
 ```python
 
             else:
                 operand = float(current)
  ```
-## Guarda el nuevo operador 
+## Guarda el nuevo operador.
 Indica que el siguiente numero debe empezar desde cero.
 ```python
             operator = data 
             reset_next = True 
  ```
 ## Boton igual (=)
-Se ejecuta cuando se presiona = y si existe un operador guardado y se evita que se intente calcular sin una oepracion valida.
+Se ejecuta cuando se presiona = y si existe un operador guardado ademas se evita que se intente calcular sin una oepracion valida.
 ```python
         elif data == "=" and operator:
  ```
-Convierte el numero que esta en pantalla en el segundo operando 
+Convierte el numero que esta en pantalla en el segundo operando.
 ```python
             second = float(current)
  ```
-## Realiza la operacion matematica segun el operador seleccionado 
+## Realiza la operacion matematica segun el operador seleccionado.
 Se comprueba si la operacion seleccionada fue una suma.
 
 str: funcion de python que sirve para convertir un vlaor en texto.
@@ -169,45 +169,41 @@ Verifica si la operacion es una division y si el segundo numero es cero, se mues
             elif operator == "/":
                 current = "Error" if second == 0  else str(operand / second)
  ```
-## Limpia el operador y el valor guardado 
+## Limpia el operador y el valor guardado.
 Indica que el siguiente numero que se escriba emepezara desde cero.
 ```python
             operator = None
             operand = None
             reset_next= True
 ```
-## Actualiza el texto del display con el nuevo valor
+## Actualiza el texto del display con el nuevo valor.
 Refesca la ventana para que el cambio se vea en pantalla.
 ```python
         result.value = current
         e.page.update()
 ```
 ## Controles 
- Boton base 
-Se crea una clase base para todos los botones con el fin de compartir propiedades comunes entre todos los botones evita duplicar el codigo y facilitar la organizacion del codigo.
+ Boton base: se crea una clase base para todos los botones con el fin de compartir propiedades comunes entre todos los botones evita duplicar el codigo y facilitar la organizacion del codigo.
 ```python
     @ft.control 
     class CalcButton(ft.Button):
         expand: int = 1
 ```
-Botones numericos 
-Se representa los botones de los numeros y se define como seran los botones cuando luego se usen.
+Botones numericos: se representa los botones de los numeros y se define como seran los botones cuando luego se usen.
 ```python
     @ft.control 
     class DigitButton(CalcButton):
         bgcolor: ft.Colors = ft.Colors.WHITE_24
         color: ft.Colors = ft.Colors.WHITE
  ```
-Botones de operacion 
-Representa los operadores y se define como seran los botones cuando luego se usen.
+Botones de operacion: representa los operadores y se define como seran los botones cuando luego se usen.
 ```python
     @ft.control
     class ActionButton(CalcButton):
         bgcolor: ft.Colors = ft.Colors.ORANGE
         color: ft.Colors = ft.Colors.WHITE
 ```
-Botones extras 
-Representa botones especiales como AC o +/- y se define como seran los botones.
+Botones extras : representa botones especiales como AC o +/- y se define como seran los botones.
 ```python
     @ft.control 
     class ExtraActionButton(CalcButton):
@@ -222,8 +218,8 @@ ActionButton: fondo naranja (operaciones).
 
 ExtraActionButton: fondo gris azulado (AC,+/-).
 
-## Agrega el contenido a la pagian principal 
-Todo lo que este dentro de page.add aparecera en la ventana
+## Agrega el contenido a la pagian principal.
+Todo lo que este dentro de page.add aparecera en la ventana.
 ```python
     page.add
 ```
@@ -235,7 +231,7 @@ Todo lo que este dentro de page.add aparecera en la ventana
             border_radius=ft.BorderRadius.all(20),
             padding=20,
 ```
-## Los elementos se colocan uno debajo del otro 
+## Los elementos se colocan uno debajo del otro.
 ```python
             content=ft.Column(
                 controls=[
@@ -247,7 +243,7 @@ Crea una fila para el display es decir la pantalla de la calculadora donde se mo
                         controls=[result],
                         alignment=ft.MainAxisAlignment.END
 ```
-## Crea una fila horizontal
+## Crea una fila horizontal.
 Todo lo que este dentro se mostrara uno al lado del otro.
 ```python
                     ft.Row(
@@ -275,23 +271,22 @@ Crea una fila horizontal dentro de la calculadora
 
 ft.Row
 ```
-Botones numericos 
-Son los botones de numeros 
-Se usa digitbutton por :  Fondo gris  Texto blanco
- Al presionarlos, llaman a button_clicked.
+Botones numericos: son los botones de numeros y se usa digitbutton por :  
+
+Fondo gris y texto blanco.
+Al presionarlos, llaman a button_clicked.
 ```python
                             DigitButton(content="7", on_click=button_clicked),
                             DigitButton(content="8", on_click=button_clicked),
                             DigitButton(content="9", on_click=button_clicked),
  ```
-##  Boton de multiplicacon 
+Boton de multiplicacon 
 Usa ActionButton por eso es naranja 
 ```python
                
                             ActionButton(content="*", on_click=button_clicked),
 ``` 
-## Botones numericos
-Se mostrara la fila con los botones 4, 5 , 6 y resta organizados horizontalmente.
+Botones numericos: Se mostrara la fila con los botones 4, 5 , 6 y resta organizados horizontalmente.
 ```python
                     ft.Row(
                         controls=[
@@ -314,6 +309,7 @@ Se mostrara los botones para los numeros 1,2,3 y el boton de suma.
 
 ``` 
 Boton del numero 0 
+
 expand=2 Hace que ocupe el doble de espacio que los otros botones.
 Imita el diseño de las calculadoras reales.
 Al presionarlo, llama a button_clicked.
@@ -323,12 +319,11 @@ Al presionarlo, llama a button_clicked.
                             DigitButton(content="0", expand=2, on_click=button_clicked),
 ```  
 Boton punto 
-Permite escribir numeros deciales y usa el estilo de los botones numericos.
+Permite escribir numeros decimales y usa el estilo de los botones numericos.
 ```python
                             DigitButton(content=".", on_click=button_clicked),
 ``` 
-Boton igual 
-Boton para calcular el resultado.
+Boton igual: boton para calcular el resultado.
 Usa ActionButton, por eso es naranja.
 ```python
                             ActionButton(content="=", on_click=button_clicked),
